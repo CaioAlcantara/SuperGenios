@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.SuperGeniosTest" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.SuperGeniosTest" parent="Base.Theme.SuperGeniosTest">
+        <item name="colorPrimary">@color/theme</item>
+        <item name="colorAccent">@color/theme</item>
+    </style>
+
+
+
+    <style name="MeuBotaoAzul" parent="Widget.AppCompat.Button.Colored">
+        <!-- Defina a cor de fundo desejada -->
+        <item name="android:background">@color/theme</item>
+        <!-- Defina a cor do texto desejada -->
+        <item name="android:textColor">@color/white</item>
+        <!-- Você pode adicionar outras propriedades personalizadas aqui, se necessário -->
+    </style>
+</resources>
