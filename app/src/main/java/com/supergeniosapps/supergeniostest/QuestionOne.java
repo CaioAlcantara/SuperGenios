@@ -16,7 +16,12 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.OnUserEarnedRewardListener;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
+import com.google.android.gms.ads.interstitial.InterstitialAd;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.google.android.gms.ads.rewarded.RewardItem;
 import com.google.android.gms.ads.rewarded.RewardedAd;
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
@@ -27,7 +32,8 @@ public class QuestionOne extends AdsImplementationActivity {
     TextView here;
     AdView adView;
     AdView adViewTwo;
-    RewardedAd rewardedAd;
+
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,56 +50,51 @@ public class QuestionOne extends AdsImplementationActivity {
 
 
     private void logic() {
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {}
+        });
         AdRequest adRequest = new AdRequest.Builder().build();
-        RewardedAd.load(this, "ca-app-pub-9093143279214257/8776482255",
-                adRequest, new RewardedAdLoadCallback() {
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error.
-                        System.out.println("erro");
-                        rewardedAd = null;
-                    }
 
+        InterstitialAd.load(this,"ca-app-pub-9093143279214257/6345081419", adRequest,
+                new InterstitialAdLoadCallback() {
                     @Override
-                    public void onAdLoaded(@NonNull RewardedAd ad) {
-                        rewardedAd = ad;
-                        rewardedAd.setFullScreenContentCallback(new FullScreenContentCallback() {
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+
+                        mInterstitialAd = interstitialAd;
+                        Toast.makeText(getApplicationContext(), "Anuncio carregado", Toast.LENGTH_SHORT).show();
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
                             @Override
                             public void onAdClicked() {
                                 // Called when a click is recorded for an ad.
-                                Intent intent = new Intent(getApplicationContext(),QuestionTwo.class );
-                                startActivity(intent);
-                                Toast.makeText(getApplicationContext(), "nao sei o que é isso", Toast.LENGTH_SHORT).show();
                             }
-
                             @Override
                             public void onAdDismissedFullScreenContent() {
-                                // Called when ad is dismissed.
-                                // Set the ad reference to null so you don't show the ad a second time.
-                                rewardedAd = null;
-                                Toast.makeText(getApplicationContext(), "mt menos isso", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Anuncio nao carregado", Toast.LENGTH_SHORT).show();
+                                mInterstitialAd = null;
                             }
                             @Override
                             public void onAdFailedToShowFullScreenContent(AdError adError) {
-                                // Called when ad fails to show.
-                                System.out.println("n fui chamado");
-                                Toast.makeText(getApplicationContext(), "nao funcionou", Toast.LENGTH_SHORT).show();
-                                rewardedAd = null;
+                                Toast.makeText(getApplicationContext(), "Anuncio nao carregado", Toast.LENGTH_SHORT).show();
+                                mInterstitialAd = null;
                             }
                             @Override
                             public void onAdImpression() {
                                 // Called when an impression is recorded for an ad.
-                                Toast.makeText(getApplicationContext(), "onAdImpression", Toast.LENGTH_SHORT).show();
                             }
                             @Override
                             public void onAdShowedFullScreenContent() {
+                                Toast.makeText(getApplicationContext(), "estou sendo exibido", Toast.LENGTH_SHORT).show();
                                 // Called when ad is shown.
-                                System.out.println("ad");
-                                Toast.makeText(getApplicationContext(), "ads carregado", Toast.LENGTH_SHORT).show();
                             }
                         });
+                    }
 
-                        Toast.makeText(getApplicationContext(), "carreguei", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        // Handle the error
+                        Toast.makeText(getApplicationContext(), "não foi encontrado anuncio ou occreu um erro com a api do google", Toast.LENGTH_SHORT).show();
+                        mInterstitialAd = null;
                     }
                 });
 
@@ -103,21 +104,10 @@ public class QuestionOne extends AdsImplementationActivity {
         falseContinue = findViewById(R.id.falseContinue);
         falseContinue.setOnClickListener(click -> {
 
-            if (rewardedAd != null) {
-                Activity activityContext = QuestionOne.this;
-                rewardedAd.show(activityContext, new OnUserEarnedRewardListener() {
-                    @Override
-                    public void onUserEarnedReward(@NonNull RewardItem rewardItem) {
-                        Toast.makeText(getApplicationContext(), "super certo", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(),QuestionTwo.class );
-                        startActivity(intent);
-                    }
-                });
+            if (mInterstitialAd != null) {
+                mInterstitialAd.show(QuestionOne.this);
             } else {
-                System.out.println("n fui assistido");
-                Log.d("TAG", "The rewarded ad wasn't ready yet.");
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class );
-                startActivity(intent);
+                Toast.makeText(getApplicationContext(), "mInterstitialAd é nulo e n fui exibido", Toast.LENGTH_SHORT).show();
             }
             Intent intent = new Intent(getApplicationContext(),MainActivity.class );
             startActivity(intent);
