@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,70 +46,23 @@ public class QuestionOne extends AdsImplementationActivity {
         adView = findViewById(R.id.adViewQuestionOne);
         adViewTwo = findViewById(R.id.adView2QuestionOne);
         putBannerAds(adView,adViewTwo);
+
         logic();
     }
 
 
     private void logic() {
-        MobileAds.initialize(this, new OnInitializationCompleteListener() {
-            @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {}
-        });
-        AdRequest adRequest = new AdRequest.Builder().build();
-
-        InterstitialAd.load(this,"ca-app-pub-9093143279214257/6345081419", adRequest,
-                new InterstitialAdLoadCallback() {
-                    @Override
-                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
-
-                        mInterstitialAd = interstitialAd;
-                        Toast.makeText(getApplicationContext(), "Anuncio carregado", Toast.LENGTH_SHORT).show();
-                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
-                            @Override
-                            public void onAdClicked() {
-                                // Called when a click is recorded for an ad.
-                            }
-                            @Override
-                            public void onAdDismissedFullScreenContent() {
-                                Toast.makeText(getApplicationContext(), "Anuncio nao carregado", Toast.LENGTH_SHORT).show();
-                                mInterstitialAd = null;
-                            }
-                            @Override
-                            public void onAdFailedToShowFullScreenContent(AdError adError) {
-                                Toast.makeText(getApplicationContext(), "Anuncio nao carregado", Toast.LENGTH_SHORT).show();
-                                mInterstitialAd = null;
-                            }
-                            @Override
-                            public void onAdImpression() {
-                                // Called when an impression is recorded for an ad.
-                            }
-                            @Override
-                            public void onAdShowedFullScreenContent() {
-                                Toast.makeText(getApplicationContext(), "estou sendo exibido", Toast.LENGTH_SHORT).show();
-                                // Called when ad is shown.
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
-                        // Handle the error
-                        Toast.makeText(getApplicationContext(), "não foi encontrado anuncio ou occreu um erro com a api do google", Toast.LENGTH_SHORT).show();
-                        mInterstitialAd = null;
-                    }
-                });
-
-
 
         here = findViewById(R.id.here);
         falseContinue = findViewById(R.id.falseContinue);
         falseContinue.setOnClickListener(click -> {
+            inicializeAds("ca-app-pub-9093143279214257/6345081419", this);
 
-            if (mInterstitialAd != null) {
-                mInterstitialAd.show(QuestionOne.this);
-            } else {
-                Toast.makeText(getApplicationContext(), "mInterstitialAd é nulo e n fui exibido", Toast.LENGTH_SHORT).show();
-            }
+//            if (mInterstitialAd != null) {
+//                mInterstitialAd.show(QuestionOne.this);
+//            } else {
+//                Toast.makeText(getApplicationContext(), "mInterstitialAd é nulo e n fui exibido", Toast.LENGTH_SHORT).show();
+//            }
             Intent intent = new Intent(getApplicationContext(),MainActivity.class );
             startActivity(intent);
         });
