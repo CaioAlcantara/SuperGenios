@@ -28,7 +28,7 @@ public abstract class AdsImplementationActivity extends AppCompatActivity {
         adViewTwo.loadAd(adRequest);
     }
 
-    void inicializeAds(String key, Activity activity){
+    void inicializeAdsInterstitials(String key, Activity activity){
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {}
@@ -87,5 +87,12 @@ public abstract class AdsImplementationActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+    @Override
+    protected void onPause() {
+        //Pausando o AdView ao pausar a activity
+        finish();
+        super.onPause();
     }
 }

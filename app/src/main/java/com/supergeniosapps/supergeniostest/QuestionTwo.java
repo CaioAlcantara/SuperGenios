@@ -35,26 +35,25 @@ public class QuestionTwo extends AdsImplementationActivity {
         four = findViewById(R.id.wrongAnswer3QuestionTwo);
 
         one.setOnClickListener(x -> {
+            inicializeAdsInterstitials("ca-app-pub-9093143279214257/6345081419", this);
             Intent intent = new Intent(getApplicationContext(),MainActivity.class );
             startActivity(intent);
         });
         two.setOnClickListener(x -> {
+            inicializeAdsInterstitials("ca-app-pub-9093143279214257/6345081419", this);
             Intent intent = new Intent(getApplicationContext(),MainActivity.class );
             startActivity(intent);
         });
         tree.setOnClickListener(x->{
-
+            Intent intent = new Intent(getApplicationContext(), QuestionThree.class );
+            startActivity(intent);
         });
         four.setOnClickListener(x -> {
+            inicializeAdsInterstitials("ca-app-pub-9093143279214257/6345081419", this);
             Intent intent = new Intent(getApplicationContext(),MainActivity.class );
             startActivity(intent);
         });
     }
 
-    @Override
-    protected void onPause() {
-        //Pausando o AdView ao pausar a activity
-        finish();
-        super.onPause();
-    }
+
 }
