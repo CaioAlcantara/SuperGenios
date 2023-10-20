@@ -52,7 +52,8 @@ public class QuestionThree extends AdsImplementationActivity {
 
             blue.setVisibility(View.VISIBLE);
             blue.setOnClickListener(y -> {
-
+                Intent intent = new Intent(getApplicationContext(),QuestionFour.class );
+                startActivity(intent);
             });
 
             red.setVisibility(View.VISIBLE);

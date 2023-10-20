@@ -37,7 +37,7 @@ public class QuestionOne extends AdsImplementationActivity {
         here = findViewById(R.id.here);
         falseContinue = findViewById(R.id.falseContinue);
         falseContinue.setOnClickListener(click -> {
-            inicializeAdsInterstitials("ca-app-pub-9093143279214257/6345081419", this);
+            inicializeAdsInterstitials("ca-app-pub-9093143279214257/2840211986", this);
 
 //            if (mInterstitialAd != null) {
 //                mInterstitialAd.show(QuestionOne.this);

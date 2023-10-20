@@ -59,15 +59,15 @@ public abstract class AdsImplementationActivity extends AppCompatActivity {
                     public void onAdDismissedFullScreenContent() {
                         // Called when ad is dismissed.
                         // Set the ad reference to null so you don't show the ad a second time.
-                        Toast.makeText(getApplicationContext(), "ad not displayed, " + mInterstitialAd, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "fechei, " + mInterstitialAd, Toast.LENGTH_SHORT).show();
                         mInterstitialAd = null;
                     }
 
                     @Override
                     public void onAdFailedToShowFullScreenContent(AdError adError) {
                         // Called when ad fails to show.
-                        Toast.makeText(getApplicationContext(), adError.getMessage(), Toast.LENGTH_SHORT).show();
-                        mInterstitialAd = null;
+//                        Toast.makeText(getApplicationContext(), adError.getMessage(), Toast.LENGTH_SHORT).show();
+//                        mInterstitialAd = null;
                     }
 
                     @Override
